@@ -1,11 +1,11 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 // import './App.css';
 import './block.css';
 import { Routes, Route } from 'react-router-dom';
-import HomePage from './pages/Home';
-import Web from './pages/Web';
+// import HomePage from './pages/Home';
+// import Web from './pages/Web';
 import Signup from './pages/signup';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IndexPage from './pages/indexPage';
 import Trendind from './pages/trendind';
