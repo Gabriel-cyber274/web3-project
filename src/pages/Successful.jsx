@@ -13,11 +13,11 @@ function Successful() {
     }, []);
 
     useEffect(()=> {
-        setTimeout(timeout, 3000);
-
         const timeout = ()=> {
             navigate('/main');
         }
+        setTimeout(timeout, 3000);
+
         return () => {
             clearTimeout(timeout);
         };
