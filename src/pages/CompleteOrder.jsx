@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 function CompleteOrder() {
     const navigate = useNavigate();
 
-
-    
     useLayoutEffect(()=> {
         if(localStorage.currentUser == null || localStorage.currentUser == undefined) {
             navigate('/');
