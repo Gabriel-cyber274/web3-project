@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import Web3 from 'web3';
 import { toast } from 'react-toastify';
@@ -6,15 +6,37 @@ import { toast } from 'react-toastify';
 
 function Bottompart({trending}) {
     const navigate = useNavigate();
+    const [enabled, setEnabled] = useState(false);
     const [paymentAmount, setPaymentAmount] = useState(0);
     const notify = (mess) => toast.success(mess);
     const notify2 = (mess) => toast.error(mess);
+    const [web3, setWeb3] = useState(null);
 
-    const funct =()=> {
-    }
+
+    
+  useEffect(() => {
+    // Instantiate web3 with the provider from MetaMask (or other provider)
+    const initWeb3 = async () => {
+      if (window.ethereum) {
+        // notify('enabled')
+        setEnabled(true);
+      } else if (window.web3) {
+        // Legacy DApp browsers
+        const web3Instance = new Web3(window.web3.currentProvider);
+        setWeb3(web3Instance);
+      } else {
+        // Non-DApp browsers
+        notify2('Non-Ethereum browser detected. go to https://metamask.io/');
+        setEnabled(false);
+        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+      }
+    };
+    initWeb3();
+  }, []);
+
 
     const handlePayment = async () => {
-        if (window.ethereum) {
+      if (window.ethereum && enabled) {
           const web3 = new Web3(window.ethereum);
           try {
             // Request account access if needed

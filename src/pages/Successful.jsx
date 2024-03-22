@@ -7,9 +7,10 @@ function Successful() {
 
     
     useLayoutEffect(()=> {
-        if(localStorage.currentUser == null || localStorage.currentUser == undefined) {
+        if(localStorage.currentUser == null && localStorage.googleUser == null || localStorage.currentUser == undefined && localStorage.googleUser == undefined) {
             navigate('/');
         }
+      
     }, []);
 
     useEffect(()=> {

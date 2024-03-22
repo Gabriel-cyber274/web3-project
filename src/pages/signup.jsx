@@ -3,6 +3,14 @@ import Mainpage from '../components/Mainpage'
 import Web3 from 'web3';
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter, useNavigate } from 'react-router-dom';
+import { app } from '../firebase';
+// import {firebase} from 'firebase/app';
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  getAuth
+} from "firebase/auth";
+
 
 
 
@@ -14,8 +22,10 @@ function Signup() {
   const [enabled, setEnabled] = useState(false);
   const navigate = useNavigate();
 
+
   useEffect(() => {
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('googleUser');
     // Instantiate web3 with the provider from MetaMask (or other provider)
     const initWeb3 = async () => {
       if (window.ethereum) {
@@ -58,7 +68,50 @@ function Signup() {
     }
   }
 
+  const auth = getAuth();
+
+
   const signUpGoogle = async()=> {
+    // const provider = new firebase.auth.GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
+
+
+    // console.log(getAuth());
+    
+    try {
+      // Sign in with a pop-up window
+      const result = await signInWithPopup(auth, provider);
+
+      // Pull signed-in user credential.
+      const user = result.user;
+      localStorage.setItem('googleUser', JSON.stringify(user));
+      navigate('/main');
+      console.log(user);
+    } catch (err) {
+      // Handle errors here.
+      const errorMessage = err.message;
+      const errorCode = err.code;
+
+      // setError(true);
+
+      // switch (errorCode) {
+      //   case "auth/operation-not-allowed":
+      //     setGoogleErrorMessage("Email/password accounts are not enabled.");
+      //     break;
+      //   case "auth/operation-not-supported-in-this-environment":
+      //     setGoogleErrorMessage("HTTP protocol is not supported. Please use HTTPS.")
+      //     break;
+      //   case "auth/popup-blocked":
+      //     setGoogleErrorMessage("Popup has been blocked by the browser. Please allow popups for this website.")
+      //     break;
+      //   case "auth/popup-closed-by-user":
+      //     setGoogleErrorMessage("Popup has been closed by the user before finalizing the operation. Please try again.")
+      //     break;
+      //   default:
+      //     setGoogleErrorMessage(errorMessage);
+      //     break;
+      // }
+    }
     console.log('google');
   }
 
